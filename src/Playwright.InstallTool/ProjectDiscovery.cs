@@ -27,6 +27,7 @@ internal sealed class ProjectDiscovery
         {
             Console.WriteLine("No obj/project.assets.json found. Running dotnet restore...");
             RunRestore(csprojPath);
+            Console.WriteLine("Restore completed.");
         }
 
         if (!File.Exists(assetsFile))
@@ -35,6 +36,7 @@ internal sealed class ProjectDiscovery
                 $"obj/project.assets.json not found after restore: {assetsFile}");
         }
 
+        Console.WriteLine($"Reading assets file: {assetsFile}");
         return ParseAssetsFile(csprojPath, assetsFile);
     }
 

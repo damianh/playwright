@@ -72,7 +72,7 @@ static (string? command, string? projectPath, string[] remainingArgs) ParseArgs(
 
 static void PrintUsage()
 {
-    Console.Error.WriteLine("Usage: playwright-install <command> [--project <path>] [options]");
+    Console.Error.WriteLine("Usage: playwright <command> [--project <path>] [options]");
     Console.Error.WriteLine();
     Console.Error.WriteLine("Commands:");
     Console.Error.WriteLine("  install    Install Playwright browsers");

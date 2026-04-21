@@ -12,6 +12,9 @@ internal sealed class PlaywrightLoader
             "microsoft.playwright",
             projectInfo.PlaywrightVersion);
 
+        Console.WriteLine($"NuGet package cache: {projectInfo.PackagesPath}");
+        Console.WriteLine($"Package path: {packageRoot}");
+
         if (!Directory.Exists(packageRoot))
         {
             throw new InvalidOperationException(
@@ -20,9 +23,12 @@ internal sealed class PlaywrightLoader
         }
 
         var dllPath = FindPlaywrightDll(packageRoot);
+        Console.WriteLine($"Playwright assembly: {dllPath}");
 
         // Set the driver search path to the package root — this is where .playwright/ lives
         Environment.SetEnvironmentVariable("PLAYWRIGHT_DRIVER_SEARCH_PATH", packageRoot);
+        Console.WriteLine($"PLAYWRIGHT_DRIVER_SEARCH_PATH: {packageRoot}");
+        Console.WriteLine($"Invoking Playwright with args: {string.Join(" ", playwrightArgs)}");
 
         var alc = new AssemblyLoadContext("PlaywrightContext", isCollectible: false);
         var assembly = alc.LoadFromAssemblyPath(dllPath);

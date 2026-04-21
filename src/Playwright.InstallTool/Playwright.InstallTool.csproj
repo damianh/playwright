@@ -3,11 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
-    <AssemblyName>playwright-install</AssemblyName>
+    <AssemblyName>playwright</AssemblyName>
 
     <!-- Tool packaging -->
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>playwright-install</ToolCommandName>
+    <ToolCommandName>playwright</ToolCommandName>
 
     <!-- NuGet package metadata -->
     <PackageId>DamianH.Playwright.InstallTool</PackageId>
