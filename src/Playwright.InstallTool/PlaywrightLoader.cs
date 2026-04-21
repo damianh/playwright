@@ -40,7 +40,12 @@ internal sealed class PlaywrightLoader
             ?? throw new InvalidOperationException("Could not find Microsoft.Playwright.Program.Main(string[]) method.");
 
         var result = mainMethod.Invoke(null, [playwrightArgs]);
-        return result is int exitCode ? exitCode : 0;
+        return result switch
+        {
+            Task<int> task => task.GetAwaiter().GetResult(),
+            int exitCode => exitCode,
+            _ => 0,
+        };
     }
 
     private static string FindPlaywrightDll(string packageRoot)
