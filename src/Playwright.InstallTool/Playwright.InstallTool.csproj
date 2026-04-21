@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>playwright-install</AssemblyName>
+
+    <!-- Tool packaging -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>playwright-install</ToolCommandName>
+
+    <!-- NuGet package metadata -->
+    <PackageId>DamianH.Playwright.InstallTool</PackageId>
+    <MinVerTagPrefix>pit-</MinVerTagPrefix>
+    <Authors>Damian Hickey</Authors>
+    <Description>A .NET tool to install Playwright browser dependencies for a project.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/damianh/playwright-install-tool</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/damianh/playwright-install-tool</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

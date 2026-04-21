@@ -1,0 +1,90 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package to release'
+        required: true
+        type: choice
+        options:
+          - DamianH.Playwright.InstallTool
+      version:
+        description: 'Version number (x.y.z or x.y.z-prerelease.1)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: nuget.org
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Determine tag prefix and project path
+      id: package-info
+      run: |
+        case "${{ inputs.package }}" in
+          "DamianH.Playwright.InstallTool")
+            echo "tag_prefix=pit-" >> $GITHUB_OUTPUT
+            echo "project_path=src/Playwright.InstallTool/Playwright.InstallTool.csproj" >> $GITHUB_OUTPUT
+            ;;
+        esac
+
+    - name: Validate version format
+      run: |
+        if ! echo "${{ inputs.version }}" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+\.[0-9]+)?$'; then
+          echo "Invalid version format. Expected: x.y.z or x.y.z-prerelease.1"
+          exit 1
+        fi
+
+    - name: Remove existing tag if present
+      run: |
+        TAG="${{ steps.package-info.outputs.tag_prefix }}${{ inputs.version }}"
+        if git rev-parse "$TAG" >/dev/null 2>&1; then
+          echo "Tag $TAG exists, removing it"
+          git tag -d "$TAG"
+          git push origin ":refs/tags/$TAG" || true
+        fi
+
+    - name: Create and push tag
+      run: |
+        TAG="${{ steps.package-info.outputs.tag_prefix }}${{ inputs.version }}"
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a "$TAG" -m "Release ${{ inputs.package }} ${{ inputs.version }}"
+        git push origin "$TAG"
+
+    - name: Build
+      run: dotnet build playwright.slnx --configuration Release
+
+    - name: Pack NuGet package
+      run: dotnet pack ${{ steps.package-info.outputs.project_path }} --configuration Release --no-build --output ./packages
+
+    - name: Push to NuGet.org
+      run: dotnet nuget push "./packages/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_ORG_APIKEY }} --skip-duplicate
+
+    - name: Upload packages as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-packages-${{ inputs.package }}-${{ inputs.version }}
+        path: ./packages/*.nupkg
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.package-info.outputs.tag_prefix }}${{ inputs.version }}
+        name: ${{ inputs.package }} ${{ inputs.version }}
+        draft: false
+        prerelease: ${{ contains(inputs.version, '-') }}
+        generate_release_notes: true
