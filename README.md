@@ -18,13 +18,13 @@ dotnet tool install DamianH.Playwright.InstallTool
 Navigate to a directory containing a project that references `Microsoft.Playwright` and run:
 
 ```bash
-playwright-install install
+playwright install
 ```
 
 To uninstall browsers:
 
 ```bash
-playwright-install uninstall
+playwright uninstall
 ```
 
 ### Options
