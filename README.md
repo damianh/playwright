@@ -1,9 +1,9 @@
 # Playwright Install Tool
 
-[![CI](https://github.com/damianh/playwright-install-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/damianh/playwright-install-tool/actions/workflows/ci.yml)
+[![CI](https://github.com/damianh/playwright/actions/workflows/ci.yml/badge.svg)](https://github.com/damianh/playwright/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/DamianH.Playwright.InstallTool.svg)](https://www.nuget.org/packages/DamianH.Playwright.InstallTool)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/DamianH.Playwright.InstallTool.svg)](https://www.nuget.org/packages/DamianH.Playwright.InstallTool)
-[![License](https://img.shields.io/github/license/damianh/playwright-install-tool.svg)](https://github.com/damianh/playwright-install-tool/blob/main/LICENSE)
+[![License](https://img.shields.io/github/license/damianh/playwright.svg)](https://github.com/damianh/playwright/blob/main/LICENSE)
 
 A .NET tool to install Playwright browser dependencies for a project — without needing to find and run `playwright.ps1` from your build output.
 

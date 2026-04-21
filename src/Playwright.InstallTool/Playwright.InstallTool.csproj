@@ -15,8 +15,8 @@
     <Authors>Damian Hickey</Authors>
     <Description>A .NET tool to install Playwright browser dependencies for a project.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/damianh/playwright-install-tool</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/damianh/playwright-install-tool</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/damianh/playwright</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/damianh/playwright</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
